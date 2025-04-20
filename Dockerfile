@@ -13,7 +13,7 @@ COPY . .
 RUN npm run build
 
 # Porta exposta
-EXPOSE 3000
+EXPOSE 4000
 
 # Comando de inicialização
 CMD ["npm", "start"]
