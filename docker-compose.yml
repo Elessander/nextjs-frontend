@@ -1,6 +1,6 @@
 version: '3'
 services:
-  nestjs:
+  frontend:
     image: elessanderunc/nextjs-frontend:1.0
     restart: always
     ports:

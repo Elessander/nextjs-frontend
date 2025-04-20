@@ -16,4 +16,4 @@ RUN npm run build
 EXPOSE 4000
 
 # Comando de inicialização
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
