@@ -1,8 +1,10 @@
 version: '3'
+
 services:
   frontend:
-    image: elessanderunc/nextjs-frontend:1.0
-    restart: always
+    image: nextjs-frontend:1.0
+    build: .
     ports:
-     - "4000:4000"
-    pull_policy: always
+      - "4000:4000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:4000
