@@ -1,46 +1,32 @@
 pipeline {
-    agent any
-    environment {
-        PATH = "C:\\Program Files\\nodejs\\;${env.PATH}"
-        DOCKER_IMAGE = "elessanderunc/nextjs-frontend"
-        TAG = "1.0"
+  agent any
+  environment {
+    DOCKER_IMAGE = "elessanderunc/nextjs-frontend"
+    TAG          = "1.0"
+  }
+  stages {
+    stage('Build') {
+      steps {
+        sh 'cd frontend && npm install && npm run build'
+      }
     }
-    stages {
-        stage('checkout') {
-            steps {
-                checkout scm
-            }
+    stage('Docker') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+          sh """
+            docker login -u $USER -p $PASS
+            cd frontend
+            docker build -t $DOCKER_IMAGE:$TAG .
+            docker push $DOCKER_IMAGE:$TAG
+            docker logout
+          """
         }
-        stage('install') {
-            steps {
-                bat 'npm install'
-            }
-        }
-        stage('build') {
-            steps {
-                bat 'npm run build'
-            }
-        }
-        stage('build image') {
-            steps {
-                bat "docker build -t ${DOCKER_IMAGE}:${TAG} ."
-            }
-        }
-        stage('docker push') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'docker_cred',
-                    passwordVariable: 'DOCKERHUB_PASSWORD',
-                    usernameVariable: 'DOCKERHUB_USERNAME'
-                )]) {
-                    bat """
-                        docker login -u %DOCKERHUB_USERNAME% -p %DOCKERHUB_PASSWORD%
-                        docker tag nextjs-frontend:1.0 %DOCKERHUB_USERNAME%/nextjs-frontend:1.0
-                        docker push %DOCKERHUB_USERNAME%/nextjs-frontend:1.0
-                        docker logout
-                    """
-                }
-            }
-        }
+      }
     }
+    stage('Deploy') {
+      steps {
+        sh 'docker-compose pull && docker-compose up -d'
+      }
+    }
+  }
 }
