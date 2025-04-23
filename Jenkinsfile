@@ -4,6 +4,7 @@ pipeline {
         PATH          = "C:\\Program Files\\nodejs\\;${env.PATH}"
         DOCKER_IMAGE  = "elessanderunc/nextjs-frontend"
         TAG           = "1.0"
+        FRONTEND_API_URL = "http://nestjs:3000"
     }
     stages {
         stage('checkout') {
@@ -23,7 +24,12 @@ pipeline {
         }
         stage('build image') {
             steps {
-                bat "docker build -t %DOCKER_IMAGE%:%TAG% ."
+                bat """
+                  docker build \
+                    --build-arg NEXT_PUBLIC_API_URL=%FRONTEND_API_URL% \
+                    -t %DOCKER_IMAGE%:%TAG% \
+                    .
+                """
             }
         }
         stage('docker push') {
