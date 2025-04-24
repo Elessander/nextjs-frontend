@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { FaListAlt } from 'react-icons/fa';
 
 type Todo = { id: number; title: string; createdAt: string };
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
@@ -15,12 +16,8 @@ export default function Home() {
       const res = await fetch(`${API_URL}/todos`);
       if (!res.ok) throw new Error('Erro ao carregar tarefas');
       setTodos(await res.json());
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('Erro inesperado');
-      }
+    } catch (err: any) {
+      setError(err.message || 'Erro inesperado');
     }
   }
 
@@ -66,18 +63,18 @@ export default function Home() {
     <main
       className="
         w-full max-w-md 
-        bg-white/80 backdrop-blur-md 
-        rounded-2xl shadow-xl 
-        p-6 mt-8
+        bg-white/90 backdrop-blur-md 
+        rounded-3xl shadow-2xl 
+        p-8 mt-12
         transition-all duration-500 ease-out
       "
     >
-      <h1 className="text-4xl font-extrabold text-indigo-800 drop-shadow-lg mb-6 text-center">
-        To-Do List
+      <h1 className="flex items-center justify-center text-5xl font-bold text-indigo-900 mb-8">
+        <FaListAlt className="mr-3" /> To-Do List
       </h1>
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded-md mb-4">
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-md">
           {error}
         </div>
       )}
@@ -86,8 +83,8 @@ export default function Home() {
         <input
           className="
             flex-1 
-            bg-white/90 border-2 border-indigo-300 
-            rounded-full px-4 py-2 
+            bg-white border-2 border-indigo-200 
+            rounded-full px-5 py-3 
             placeholder-indigo-400 
             focus:outline-none focus:ring-2 focus:ring-indigo-500 
             transition
@@ -100,7 +97,7 @@ export default function Home() {
           onClick={add}
           className="
             bg-indigo-600 text-white 
-            px-6 py-2 rounded-full 
+            px-6 py-3 rounded-full 
             hover:bg-indigo-700 
             shadow-md hover:shadow-lg 
             transition-all
@@ -116,15 +113,16 @@ export default function Home() {
             key={t.id}
             className="
               flex justify-between items-center 
-              bg-white/90 p-4 rounded-2xl shadow-md 
+              bg-white p-4 rounded-2xl shadow-md 
               hover:shadow-xl hover:-translate-y-1 
               transition-all
             "
           >
-            <span className="text-gray-800">{t.title}</span>
+            <span className="text-gray-800 font-medium">{t.title}</span>
             <button
               onClick={() => remove(t.id)}
-              className="text-red-600 hover:text-red-800 text-xl transition"
+              className="text-red-500 hover:text-red-700 text-xl transition"
+              aria-label="Remover tarefa"
             >
               ✕
             </button>
