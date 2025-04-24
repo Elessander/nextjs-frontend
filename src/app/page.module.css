@@ -1,8 +1,6 @@
-/* page.module.css */
-
 .container {
     width: 100%;
-    max-width: 28rem; /* 448px */
+    max-width: 28rem; 
     margin: 3rem auto 0;
     padding: 2rem;
     background: rgba(255, 255, 255, 0.9);
@@ -18,7 +16,7 @@
     justify-content: center;
     font-size: 3rem;
     font-weight: bold;
-    color: #4c51bf; /* indigo-900 */
+    color: #4c51bf; 
     margin-bottom: 2rem;
   }
   
@@ -40,22 +38,22 @@
   .input {
     flex: 1;
     padding: 0.75rem 1.25rem;
-    border: 2px solid #c3dafe; /* indigo-200 */
+    border: 2px solid #c3dafe; 
     border-radius: 9999px;
     font-size: 1rem;
-    color: #1a202c; /* gray-800 */
+    color: #1a202c;
     outline: none;
     transition: box-shadow 0.2s, border-color 0.2s;
   }
   
   .input:focus {
-    border-color: #667eea; /* indigo-500 */
+    border-color: #667eea; 
     box-shadow: 0 0 0 2px rgba(102,126,234,0.5);
   }
   
   .addButton {
     padding: 0.75rem 1.5rem;
-    background-color: #4c51bf; /* indigo-600 */
+    background-color: #4c51bf;
     color: white;
     border: none;
     border-radius: 9999px;
@@ -66,7 +64,7 @@
   }
   
   .addButton:hover {
-    background-color: #4338ca; /* indigo-700 */
+    background-color: #4338ca; 
     box-shadow: 0 6px 10px rgba(0,0,0,0.15);
   }
   
@@ -97,7 +95,7 @@
   
   .todoTitle {
     font-size: 1rem;
-    color: #2d3748; /* gray-800 */
+    color: #2d3748; 
     font-weight: 500;
   }
   
@@ -105,12 +103,12 @@
     background: none;
     border: none;
     font-size: 1.25rem;
-    color: #f56565; /* red-500 */
+    color: #f56565; 
     cursor: pointer;
     transition: color 0.2s;
   }
   
   .removeButton:hover {
-    color: #c53030; /* red-700 */
+    color: #c53030; 
   }
   
