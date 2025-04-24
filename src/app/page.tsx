@@ -1,10 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { FaListAlt } from 'react-icons/fa';
-import styles from './page.module.css';
 
 type Todo = { id: number; title: string; createdAt: string };
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export default function Home() {
@@ -16,9 +15,14 @@ export default function Home() {
     try {
       const res = await fetch(`${API_URL}/todos`);
       if (!res.ok) throw new Error('Erro ao carregar tarefas');
-      setTodos(await res.json());
+      const data = await res.json();
+      setTodos(data);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Erro inesperado');
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Erro inesperado');
+      }
     }
   }
 
@@ -34,7 +38,11 @@ export default function Home() {
       setNewTitle('');
       load();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Erro inesperado');
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Erro inesperado');
+      }
     }
   }
 
@@ -44,7 +52,11 @@ export default function Home() {
       if (!res.ok) throw new Error('Erro ao remover tarefa');
       load();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Erro inesperado');
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Erro inesperado');
+      }
     }
   }
 
@@ -53,33 +65,37 @@ export default function Home() {
   }, []);
 
   return (
-    <main className={styles.container}>
-      <h1 className={styles.title}>
-        <FaListAlt style={{ marginRight: '0.75rem' }} /> To-Do List
-      </h1>
+    <main className="p-4 max-w-md mx-auto">
+      <h1 className="text-2xl font-bold mb-4">To‑Do List</h1>
 
-      {error && <div className={styles.error}>{error}</div>}
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 p-2 rounded mb-4">
+          {error}
+        </div>
+      )}
 
-      <div className={styles.form}>
+      <div className="flex gap-2 mb-4">
         <input
-          className={styles.input}
+          className="flex-1 border p-2 rounded"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
           placeholder="Nova tarefa"
         />
-        <button onClick={add} className={styles.addButton}>
+        <button
+          onClick={add}
+          className="bg-blue-500 text-white px-4 rounded hover:bg-blue-600"
+        >
           Adicionar
         </button>
       </div>
 
-      <ul className={styles.todoList}>
+      <ul className="space-y-2">
         {todos.map((t) => (
-          <li key={t.id} className={styles.todoItem}>
-            <span className={styles.todoTitle}>{t.title}</span>
+          <li key={t.id} className="flex justify-between items-center">
+            <span>{t.title}</span>
             <button
               onClick={() => remove(t.id)}
-              className={styles.removeButton}
-              aria-label="Remover tarefa"
+              className="text-red-500 hover:text-red-700"
             >
               ✕
             </button>
