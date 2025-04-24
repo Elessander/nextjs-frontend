@@ -15,8 +15,12 @@ export default function Home() {
       const res = await fetch(`${API_URL}/todos`);
       if (!res.ok) throw new Error('Erro ao carregar tarefas');
       setTodos(await res.json());
-    } catch (err: any) {
-      setError(err.message || 'Erro inesperado');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Erro inesperado');
+      }
     }
   }
 
@@ -31,8 +35,12 @@ export default function Home() {
       if (!res.ok) throw new Error('Erro ao adicionar tarefa');
       setNewTitle('');
       load();
-    } catch (err: any) {
-      setError(err.message || 'Erro inesperado');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Erro inesperado');
+      }
     }
   }
 
@@ -41,8 +49,12 @@ export default function Home() {
       const res = await fetch(`${API_URL}/todos/${id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Erro ao remover tarefa');
       load();
-    } catch (err: any) {
-      setError(err.message || 'Erro inesperado');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Erro inesperado');
+      }
     }
   }
 
