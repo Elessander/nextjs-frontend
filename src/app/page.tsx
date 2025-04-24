@@ -65,43 +65,45 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="p-4 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">To‑Do List</h1>
+    <main className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div>
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">To‑Do-List</h1>
 
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 p-2 rounded mb-4">
-          {error}
+        {error && (
+          <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-4 text-sm">
+            {error}
+          </div>
+        )}
+
+        <div className="flex flex-col sm:flex-row gap-2 mb-4">
+          <input
+            className="flex-1 border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
+            placeholder="Nova tarefa"
+          />
+          <button
+            onClick={add}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200"
+          >
+            Adicionar
+          </button>
         </div>
-      )}
 
-      <div className="flex gap-2 mb-4">
-        <input
-          className="flex-1 border p-2 rounded"
-          value={newTitle}
-          onChange={(e) => setNewTitle(e.target.value)}
-          placeholder="Nova tarefa"
-        />
-        <button
-          onClick={add}
-          className="bg-blue-500 text-white px-4 rounded hover:bg-blue-600"
-        >
-          Adicionar
-        </button>
+        <ul className="space-y-3">
+          {todos.map((t) => (
+            <li key={t.id} className="flex justify-between items-center bg-gray-50 p-3 rounded-md shadow-sm">
+              <span className="text-gray-700">{t.title}</span>
+              <button
+                onClick={() => remove(t.id)}
+                className="text-red-500 hover:text-red-700 transition duration-200"
+              >
+                ✕
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-
-      <ul className="space-y-2">
-        {todos.map((t) => (
-          <li key={t.id} className="flex justify-between items-center">
-            <span>{t.title}</span>
-            <button
-              onClick={() => remove(t.id)}
-              className="text-red-500 hover:text-red-700"
-            >
-              ✕
-            </button>
-          </li>
-        ))}
-      </ul>
     </main>
   );
 }
