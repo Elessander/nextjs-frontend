@@ -65,9 +65,9 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <main className="min-h-screen bg-black flex items-center justify-center p-4">
       <div>
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">To‑Do-List</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center text-white">To‑Do-List</h1>
 
         {error && (
           <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-4 text-sm">
@@ -77,7 +77,7 @@ export default function Home() {
 
         <div className="flex flex-col sm:flex-row gap-2 mb-4">
           <input
-            className="flex-1 border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
             placeholder="Nova tarefa"
